@@ -1,0 +1,147 @@
+<div class="mx-auto max-w-7xl px-3 py-3.5">
+  <main class="min-w-0">
+    <div class="mx-auto max-w-2xl">
+      <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div class="mb-5 flex items-center gap-3">
+          <span
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#e7f3ff] text-[#1877f2]"
+            ><i class="fa-solid fa-key"></i
+          ></span>
+          <div>
+            <h1 class="text-xl font-extrabold text-slate-900 sm:text-2xl">Change Password</h1>
+            <p class="text-sm text-slate-500">
+              Keep your account secure by using a strong password.
+            </p>
+          </div>
+        </div>
+        <form [formGroup]="changePassForm" (ngSubmit)="changPass()">
+          <!-- Olid Pass -->
+          <div class="mb-4">
+            <label for="password" class="block mb-1 text-sm font-medium text-slate-700"
+              >Current password</label
+            >
+            <div class="relative">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 text-slate-400">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+              <input
+                formControlName="password"
+                type="password"
+                id="password"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full ps-10 py-4 shadow-xs placeholder:text-body"
+                placeholder="Enter current password"
+              />
+            </div>
+            @if (
+              changePassForm.get('password')?.errors && changePassForm.get('password')?.touched
+            ) {
+              <div class="errors">
+                @if (changePassForm.get('password')?.getError('required')) {
+                  <p class="mt-1 text-xs font-semibold text-rose-600">Password is required.</p>
+                }
+              </div>
+            }
+          </div>
+          <!-- ************ -->
+          <!-- New Pass -->
+          <div class="mb-4">
+            <label for="newPassword" class="block mb-1 text-sm font-medium text-slate-700"
+              >New password</label
+            >
+            <div class="relative">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 text-slate-400">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+              <input
+                formControlName="newPassword"
+                type="password"
+                id="newPassword"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full ps-10 py-4 shadow-xs placeholder:text-body"
+                placeholder="Enter new password"
+                required
+              />
+            </div>
+            @if (
+              changePassForm.get('newPassword')?.errors &&
+              changePassForm.get('newPassword')?.touched
+            ) {
+              <div class="errors">
+                @if (changePassForm.get('newPassword')?.getError('required')) {
+                  <p class="mt-1 text-xs font-semibold text-rose-600">New password is required.</p>
+                }
+
+                @if (changePassForm.get('newPassword')?.getError('pattern')) {
+                  <p class="mt-1 text-xs font-semibold text-rose-600">
+                    Password must include uppercase, lowercase, number, and special character.
+                  </p>
+                }
+              </div>
+            }
+          </div>
+          <!-- ************ -->
+          <!-- Confirm Pass -->
+          <div class="mb-4">
+            <label for="repassword" class="block mb-1 text-sm font-medium text-slate-700"
+              >Confirm new password</label
+            >
+            <div class="relative">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 text-slate-400">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+              <input
+                formControlName="rePassword"
+                type="password"
+                id="repassword"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full ps-10 py-4 shadow-xs placeholder:text-body"
+                placeholder="Re-enter new password"
+                required
+              />
+            </div>
+            @if (
+              changePassForm.get('rePassword')?.errors && changePassForm.get('rePassword')?.touched
+            ) {
+              <div class="errors">
+                @if (changePassForm.get('rePassword')?.getError('required')) {
+                  <p class="mt-1 text-xs font-semibold text-rose-600">
+                    Please confirm your new password.
+                  </p>
+                }
+
+                @if (changePassForm.get('rePassword')?.hasError('mismatch')) {
+                  <p class="mt-1 text-xs font-semibold text-rose-600">Passwords do not match.</p>
+                }
+              </div>
+            }
+          </div>
+          <!-- ********************* -->
+
+          <button
+            [disabled]="changePassForm.invalid"
+            type="submit"
+            class="disabled:cursor-not-allowed disabled:from-gray-500 disabled:to-gray-400 w-full py-4 bg-linear-to-r from-blue-600 to-blue-400 border-none text-white font-bold rounded-base cursor-pointer"
+          >
+            Create Account <i class="fa-solid fa-arrow-right"></i>
+            @if (isLoading) {
+              <span><i class="fa-solid fa-spinner fa-spin"></i></span>
+            }
+          </button>
+
+          @if (errorMsg) {
+            <div
+              class="my-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm font-semibold text-rose-700"
+            >
+              {{ errorMsg }}
+            </div>
+          }
+          @if (successMsg) {
+            <div
+              class="my-2 rounded-xl border border-green-200 bg-green-50 px-4 py-2.5 text-sm font-semibold text-green-700"
+            >
+              {{ successMsg }}
+            </div>
+          }
+        </form>
+      </section>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,12 @@
+<section class="p-4">
+  <!-- comment Component -->
+  <app-get-post-comments 
+  #getCommentsComp
+  [postId]="postId"
+  [postOwnerId]="postOwnerId"
+  [currentUserId]="currentUserId"
+  ></app-get-post-comments>
+  <app-create-comments [postId]="postId"
+  (refreshFeed)="getCommentsComp.getPostComments()"
+  ></app-create-comments>
+</section>

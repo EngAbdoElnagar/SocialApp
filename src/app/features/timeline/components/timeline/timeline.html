@@ -1,0 +1,341 @@
+<div class="mx-auto max-w-7xl px-3 py-3.5">
+  <main class="min-w-0">
+    <div class="grid gap-4 xl:grid-cols-[240px_minmax(0,1fr)_300px]">
+      <aside class="hidden h-fit space-y-3 xl:sticky xl:top-21 xl:block">
+        <div class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+          <button
+            (click)="changeTab('Feed')"
+            [class]="
+              activeTab === 'Feed'
+                ? 'bg-[#e7f3ff] text-[#1877f2]'
+                : 'text-slate-700 hover:bg-slate-100'
+            "
+            class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition cursor-pointer"
+          >
+            <div>
+              <i class="fa-regular fa-newspaper"></i>
+            </div>
+            <p>Feed</p>
+          </button>
+
+          <button
+            (click)="changeTab('MyPosts')"
+            [class]="
+              activeTab === 'MyPosts'
+                ? 'bg-[#e7f3ff] text-[#1877f2]'
+                : 'text-slate-700 hover:bg-slate-100'
+            "
+            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition cursor-pointer"
+          >
+            <div>
+              <i class="fa-regular fa-star"></i>
+            </div>
+            <p>My Posts</p>
+          </button>
+
+          <button
+            (click)="changeTab('Community')"
+            [class]="
+              activeTab === 'Community'
+                ? 'bg-[#e7f3ff] text-[#1877f2]'
+                : 'text-slate-700 hover:bg-slate-100'
+            "
+            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition cursor-pointer"
+          >
+            <div>
+              <i class="fa-solid fa-earth-americas"></i>
+            </div>
+            <p>Community</p>
+          </button>
+
+          <button
+            (click)="changeTab('Saved')"
+            [class]="
+              activeTab === 'Saved'
+                ? 'bg-[#e7f3ff] text-[#1877f2]'
+                : 'text-slate-700 hover:bg-slate-100'
+            "
+            class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold transition cursor-pointer"
+          >
+            <div>
+              <i class="fa-regular fa-bookmark"></i>
+            </div>
+            <p>Saved</p>
+          </button>
+        </div>
+      </aside>
+      <section class="space-y-4">
+        <div class="rounded-2xl border border-slate-200 bg-white p-2 shadow-sm xl:hidden">
+          <div class="grid grid-cols-2 gap-2">
+            <button
+              (click)="changeTab('Feed')"
+              [class]="
+                activeTab === 'Feed' ? 'bg-[#e7f3ff] text-[#1877f2]' : 'bg-slate-50 text-slate-700'
+              "
+              class="flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-bold transition cursor-pointer"
+            >
+              <i class="fa-regular fa-newspaper"></i>
+              <p>Feed</p>
+            </button>
+
+            <button
+              (click)="changeTab('MyPosts')"
+              [class]="
+                activeTab === 'MyPosts'
+                  ? 'bg-[#e7f3ff] text-[#1877f2]'
+                  : 'bg-slate-50 text-slate-700'
+              "
+              class="flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-bold transition cursor-pointer"
+            >
+              <i class="fa-regular fa-star"></i>
+              <p>My Posts</p>
+            </button>
+
+            <button
+              (click)="changeTab('Community')"
+              [class]="
+                activeTab === 'Community'
+                  ? 'bg-[#e7f3ff] text-[#1877f2]'
+                  : 'bg-slate-50 text-slate-700'
+              "
+              class="flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-bold transition cursor-pointer"
+            >
+              <i class="fa-solid fa-earth-americas"></i>
+              <p>Community</p>
+            </button>
+
+            <button
+              (click)="changeTab('Saved')"
+              [class]="
+                activeTab === 'Saved' ? 'bg-[#e7f3ff] text-[#1877f2]' : 'bg-slate-50 text-slate-700'
+              "
+              class="flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-bold transition cursor-pointer"
+            >
+              <i class="fa-regular fa-bookmark"></i>
+              <p>Saved</p>
+            </button>
+          </div>
+          <!-- ********** -->
+        </div>
+        <div class="space-y-3 xl:hidden">
+          <button
+            (click)="togel()"
+            type="button"
+            class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left shadow-sm"
+          >
+            <div class="flex gap-1.5 items-center">
+              <div class="icon lucide lucide-users text-[#1877f2]">
+                <i class="fa-solid fa-user-group"></i>
+              </div>
+              <p class="text-sm font-extrabold text-slate-900">Suggested Friends</p>
+            </div>
+            <div class="flex gap-1.5 items-center">
+              <div class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-600">
+                {{ suggestionList.length }}
+              </div>
+              <p class="text-xs font-bold text-[#1877f2]">
+                {{ isSuggestedVisible ? 'Hide' : 'Show' }}
+              </p>
+            </div>
+          </button>
+          @if (isSuggestedVisible) {
+            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div class="mb-3 flex items-center justify-between gap-2">
+                <!-- ************************* -->
+                <div class="flex gap-1.5 items-center">
+                  <div class="icon lucide lucide-users text-[#1877f2]">
+                    <i class="fa-solid fa-user-group"></i>
+                  </div>
+                  <p class="text-sm font-extrabold text-slate-900">Suggested Friends</p>
+                </div>
+                <div>
+                  <div
+                    class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-600"
+                  >
+                    {{ suggestionList.length }}
+                  </div>
+                </div>
+                <!-- ************************* -->
+              </div>
+
+              <div class="mb-3">
+                <label class="relative block">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-3 text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </div>
+                  <input
+                    placeholder="Search friends..."
+                    class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-700 outline-none focus:border-[#1877f2] focus:bg-white"
+                    value=""
+                /></label>
+              </div>
+
+              <div class="">
+                @for (item of suggestionList; track item._id) {
+                  <div class="my-3 rounded-xl border border-slate-200 p-2.5">
+                    <div class="flex items-center justify-between gap-2">
+                      <button
+                        [routerLink]="
+                          item._id === currentUserId ? ['/profile'] : ['/profile', item._id]
+                        "
+                        type="button"
+                        class="flex min-w-0 items-center gap-2 rounded-lg px-1 py-1 text-left transition hover:bg-slate-50 cursor-pointer"
+                      >
+                        <img
+                          alt="Ahmed Bahnasy"
+                          class="size-10 rounded-full object-cover"
+                          [src]="item.photo"
+                        />
+                        <div class="min-w-0">
+                          <p class="truncate text-sm font-bold text-slate-900 hover:underline">
+                            {{ item.name }}
+                          </p>
+                          <p class="truncate text-xs text-slate-500">
+                            @if (item.username) {
+                              @ {{ item.username }}
+                            } @else {
+                              route user
+                            }
+                          </p>
+                        </div>
+                      </button>
+                      <button
+                        class="flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-bold transition disabled:opacity-60 bg-[#e7f3ff] text-[#1877f2] hover:bg-[#d8ebff] cursor-pointer"
+                      >
+                        <i class="fa-solid fa-user-plus"></i>
+                        Follow
+                      </button>
+                    </div>
+                  </div>
+                }
+              </div>
+              <button
+                class="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-100 cursor-pointer"
+              >
+                View more
+              </button>
+            </div>
+          }
+        </div>
+        <!-- ???????????????????????????????? -->
+        <app-createpost></app-createpost>
+        <!-- ???????????????????????????????? -->
+
+        <!-- Post -->
+        @if (isLoading) {
+          <div class="flex justify-center py-10">
+            <div
+              class="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-[#1877f2]"
+            ></div>
+          </div>
+        } @else {
+          @for (post of filteredPosts; track post._id) {
+            <app-post-card
+              [post]="post"
+              [currentUserId]="currentUserId"
+              (refreshData)="getAllPosts()"
+              (refreshData)="getHomeFeed()"
+              (refreshFeed)="getHomeFeed()"
+              (refreshData)="changeTab(activeTab)"
+            >
+            </app-post-card>
+          } @empty {
+            <div class="my-4">
+              <div
+                class="rounded-2xl border border-slate-200 bg-white p-10 text-center text-slate-500 shadow-sm"
+              >
+                No posts yet. Be the first one to publish.
+              </div>
+            </div>
+          }
+        }
+        <!-- Post -->
+
+      </section>
+      <aside class="hidden h-fit xl:sticky xl:top-21 xl:block">
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <!-- ?????? -->
+          <div class="mb-3 flex items-center justify-between gap-2">
+            <!-- ************************* -->
+            <div class="flex gap-1.5 items-center">
+              <div class="icon lucide lucide-users text-[#1877f2]">
+                <i class="fa-solid fa-user-group"></i>
+              </div>
+              <p class="text-base font-extrabold text-slate-900">Suggested Friends</p>
+            </div>
+            <div>
+              <div class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-600">
+                {{ suggestionList.length }}
+              </div>
+            </div>
+            <!-- ************************* -->
+          </div>
+
+          <div class="mb-3">
+            <label class="relative block">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3 text-slate-400">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+              <input
+                placeholder="Search friends..."
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-700 outline-none focus:border-[#1877f2] focus:bg-white"
+                value=""
+            /></label>
+          </div>
+          <!-- ?????? -->
+
+          <div class="space-y-3">
+            @for (item of suggestionList; track item._id) {
+              <div class="rounded-xl border border-slate-200 p-2.5">
+                <div class="flex items-center justify-between gap-2">
+                  <button
+                    [routerLink]="
+                      item._id === currentUserId ? ['/profile'] : ['/profile', item._id]
+                    "
+                    type="button"
+                    class="flex min-w-0 items-center gap-2 rounded-lg px-1 py-1 text-left transition hover:bg-slate-50 cursor-pointer"
+                  >
+                    <img
+                      alt="Ahmed Bahnasy"
+                      class="size-10 rounded-full object-cover"
+                      [src]="item.photo"
+                    />
+                    <div class="min-w-0">
+                      <p class="truncate text-sm font-bold text-slate-900 hover:underline">
+                        {{ item.name }}
+                      </p>
+                      <!-- ?????????????***************** -->
+                      <p class="truncate text-xs text-slate-500">
+                        @if (item.username) {
+                          @ {{ item.username }}
+                        } @else {
+                          route user
+                        }
+                      </p>
+                    </div>
+                  </button>
+                  <button
+                    class="flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-bold transition disabled:opacity-60 bg-[#e7f3ff] text-[#1877f2] hover:bg-[#d8ebff] cursor-pointer"
+                  >
+                    <i class="fa-solid fa-user-plus"></i>
+                    Follow
+                  </button>
+                </div>
+                <div class="mt-2 flex items-center gap-2 text-[11px] font-semibold text-slate-500">
+                  <span class="rounded-full bg-slate-100 px-2 py-0.5">
+                    {{ item.followersCount }} followers</span
+                  >
+                </div>
+              </div>
+            }
+          </div>
+          <button
+            class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-100"
+          >
+            View more
+          </button>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>

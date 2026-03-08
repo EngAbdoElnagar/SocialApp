@@ -1,0 +1,22 @@
+@if (imageUrl) {
+  <div
+    (click)="closeImage()"
+    class="fixed inset-0 z-1000 flex items-center justify-center bg-black/90 p-4 transition-opacity animate-fade-in"
+  >
+
+    <button
+      (click)="closeImage()"
+      class="absolute right-6 top-6 text-white text-3xl hover:text-gray-300 cursor-pointer"
+    >
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+
+    <img
+      [src]="imageUrl"
+      class="max-h-full max-w-full rounded-lg shadow-2xl animate-zoom-in"
+      (click)="$event.stopPropagation()"
+      alt="Full preview"
+    />
+
+  </div>
+}

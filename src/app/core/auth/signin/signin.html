@@ -1,0 +1,118 @@
+<section class="min-h-screen flex flex-col items-center justify-center p-10">
+  <div class="bg-white shadow-lg rounded-2xl p-8 max-w-lg w-full">
+    <div class="heading pb-5">
+      <h1 class="mb-4 capitalize text-3xl font-bold text-center text-slate-700">Login</h1>
+      <p class="mb-5 capitalize text-slate-700 text-center font-medium text-base">
+        Don't have an account? <a routerLink="/signup" class="text-blue-400"> Sign up </a>
+      </p>
+
+      <div class="social-btns flex items-center gap-3 justify-center">
+        <button
+          class="btn border border-slate-700 rounded-base py-3 grow hover:scale-105 transition-transform duration-200"
+        >
+          <i class="fa-brands fa-google text-red-500"></i> Google</button
+        ><button
+          class="btn bg-blue-500 text-white border border-blue-500 rounded-base py-3 grow hover:scale-105 transition-transform duration-200"
+        >
+          <i class="fa-brands fa-facebook-f"></i>
+          Facebook
+        </button>
+      </div>
+      <p
+        class="seperator my-5 text-gray-400 text-sm relative text-center after:w-1/3 after:h-px after:bg-linear-to-r after:from-transparent after:via-gray-400/40 after:to-transparent after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 before:w-1/3 before:h-px before:bg-linear-to-r before:from-transparent before:via-gray-400/40 before:to-transparent before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2"
+      >
+        or continue with email
+      </p>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="signIn()">
+      <div class="mb-6">
+        <label for="email" class="block mb-2 text-sm font-medium text-slate-700"
+          >Email Address</label
+        >
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 text-slate-400">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <input
+            formControlName="email"
+            type="email"
+            id="email"
+            class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full ps-10 py-4 shadow-xs placeholder:text-body"
+            placeholder="name@example.com"
+            required
+          />
+        </div>
+        @if (loginForm.get('email')?.errors && loginForm.get('email')?.touched) {
+          <div class="errors">
+            @if (loginForm.get('email')?.getError('required')) {
+              <p class="mt-1 text-xs font-semibold text-rose-600">Email or username is required.</p>
+            }
+            @if (loginForm.get('email')?.getError('email')) {
+              <p class="mt-1 text-xs font-semibold text-rose-600">
+                Please enter a valid email address.
+              </p>
+            }
+          </div>
+        }
+      </div>
+      <div class="mb-6">
+        <label for="password" class="block mb-2 text-sm font-medium text-slate-700">Password</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 text-slate-400">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <input
+            formControlName="password"
+            type="password"
+            id="password"
+            class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full ps-10 py-4 shadow-xs placeholder:text-body"
+            placeholder="Create a strong password"
+            required
+          />
+        </div>
+        @if (loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
+          <div class="errors">
+            @if (loginForm.get('password')?.getError('required')) {
+              <p class="mt-1 text-xs font-semibold text-rose-600">Password is required.</p>
+            }
+            @if (loginForm.get('password')?.getError('pattern')) {
+              <p class="mt-1 text-xs font-semibold text-rose-600">
+                Password must include uppercase, lowercase, number, and special character.
+              </p>
+            }
+          </div>
+        }
+      </div>
+
+      <button
+        [disabled]="loginForm.invalid"
+        type="submit"
+        class="disabled:cursor-not-allowed disabled:from-gray-500 disabled:to-gray-400 w-full py-4 bg-linear-to-r from-blue-600 to-blue-400 border-none text-white font-bold rounded-base cursor-pointer"
+      >
+        @if (isLoading) {
+          please wait...
+        }@else{
+
+          Sign in <i class="fa-solid fa-arrow-right"></i>
+        }
+
+      </button>
+      <!-- Forget Passwoed -->
+      <button
+        type="button"
+        class="mx-auto cursor-pointer py-2 block text-sm font-semibold text-[#00298d] transition hover:underline"
+      >
+        Forget password?
+      </button>
+      <!-- Forget Passwoed -->
+
+      @if (errorMsg) {
+        <div
+          class="my-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm font-semibold text-rose-700"
+        >
+          {{ errorMsg }}
+        </div>
+      }
+    </form>
+  </div>
+</section>

@@ -1,0 +1,68 @@
+<div class="my-3 flex items-start gap-2">
+  <img
+    [alt]="userName"
+    class="h-9 w-9 rounded-full object-cover"
+    [src]="userPhoto"
+  />
+  <div
+    class="w-full rounded-2xl border border-slate-200 bg-[#f0f2f5] px-2.5 py-1.5 focus-within:border-[#c7dafc] focus-within:bg-white"
+    data-comment-mention-root="true"
+  >
+    <form (submit)="createComment($event)">
+      <textarea
+        [formControl]="postDescription"
+        #postInput
+        [(ngModel)]="postText"
+        [placeholder]="'Comment as'   + userName + '...'"
+        rows="1"
+        class="max-h-35 min-h-10 w-full resize-none bg-transparent px-2 py-1.5 text-sm leading-5 placeholder:text-slate-500 outline-none border-none focus:ring-0"
+      ></textarea>
+      @if (imagePreview) {
+        <div class="relative mt-2 rounded-lg overflow-hidden border border-slate-200 w-fit">
+          <button
+            type="button"
+            (click)="removeImage()"
+            class="absolute right-1 top-1 z-20 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80 transition"
+          >
+            <i class="fa-solid fa-xmark text-xs"></i>
+          </button>
+          <img
+            [src]="imagePreview"
+            class="max-w-[200px] max-h-40 object-contain rounded-lg"
+            alt="Preview"
+          />
+        </div>
+      }
+      <div class="mt-1 flex items-center justify-between">
+        <div class="flex items-center gap-1 relative">
+          <label
+            class="inline-flex cursor-pointer items-center justify-center rounded-full p-2 text-slate-500 transition hover:bg-slate-200 hover:text-emerald-600"
+            ><i class="fa-regular fa-image"></i
+            ><input
+              (change)="prepareUploadedFile($event)"
+              accept="image/*"
+              class="hidden"
+              type="file" /></label
+          ><button
+            (click)="toggleEmojiPicker()"
+            type="button"
+            class="inline-flex items-center justify-center rounded-full p-2 text-slate-500 transition hover:bg-slate-200 hover:text-amber-500"
+          >
+            <i class="fa-regular fa-face-smile"></i>
+          </button>
+          @if (showEmojiPicker) {
+            <div class="absolute bottom-full left-0 z-500 mb-2 shadow-2xl">
+              <emoji-picker (emoji-click)="addEmoji($event)"></emoji-picker>
+            </div>
+          }
+        </div>
+        <button
+          class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#1877f2] text-white shadow-sm transition hover:bg-[#166fe5] disabled:cursor-not-allowed disabled:bg-[#9ec5ff] disabled:opacity-100"
+          [disabled]="isCommentDisabled"
+        >
+          <i class="fa-regular fa-paper-plane"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

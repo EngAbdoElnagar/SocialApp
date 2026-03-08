@@ -1,0 +1,464 @@
+<div class="mx-auto max-w-7xl px-3 py-3.5">
+  <main class="min-w-0">
+    <div class="space-y-5 sm:space-y-6">
+      @if (userData) {
+        <section
+          class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_10px_rgba(15,23,42,.06)] sm:rounded-[28px]"
+        >
+          @if (userData.cover) {
+            <div
+              class="group/cover relative h-44 sm:h-52 lg:h-60"
+              [style.background-image]="
+                `linear-gradient(rgba(15, 23, 42, 0.22), rgba(15, 23, 42, 0.4)), url(${userData.cover})`
+              "
+              style="background-size: cover; background-position: center center"
+            >
+              <div
+                class="pointer-events-none absolute right-2 top-2 z-10 flex max-w-[90%] flex-wrap items-center justify-end gap-1.5 opacity-100 transition duration-200 sm:right-3 sm:top-3 sm:max-w-none sm:gap-2 sm:opacity-0 sm:group-hover/cover:opacity-100 sm:group-focus-within/cover:opacity-100"
+              >
+                <button
+                  (click)="openImage(userData.cover)"
+                  type="button"
+                  class="pointer-events-auto inline-flex items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
+                >
+                  <i class="fa-solid fa-maximize"></i>View cover</button
+                ><label
+                  class="pointer-events-auto inline-flex cursor-pointer items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
+                  ><i class="fa-regular fa-camera"></i>Change cover<input
+                    accept="image/*"
+                    class="hidden"
+                    type="file" /></label
+                ><button
+                  type="button"
+                  class="pointer-events-auto inline-flex items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 disabled:cursor-not-allowed disabled:opacity-60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
+                >
+                  <i class="fa-solid fa-trash-can"></i>Remove
+                </button>
+              </div>
+            </div>
+          } @else {
+            <div
+              class="group/cover relative h-44 bg-[linear-gradient(112deg,#0f172a_0%,#1e3a5f_36%,#2b5178_72%,#5f8fb8_100%)] sm:h-52 lg:h-60"
+            >
+              <div
+                class="pointer-events-none absolute right-2 top-2 z-10 flex max-w-[90%] flex-wrap items-center justify-end gap-1.5 opacity-100 transition duration-200 sm:right-3 sm:top-3 sm:max-w-none sm:gap-2 sm:opacity-0 sm:group-hover/cover:opacity-100 sm:group-focus-within/cover:opacity-100"
+              >
+                <label
+                  class="pointer-events-auto inline-flex cursor-pointer items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
+                  ><i class="fa-regular fa-camera"></i> Add cover<input
+                    accept="image/*"
+                    class="hidden"
+                    type="file"
+                /></label>
+              </div>
+            </div>
+          }
+
+          <div class="relative -mt-12 px-3 pb-5 sm:-mt-16 sm:px-8 sm:pb-6">
+            <div class="rounded-3xl border border-white/60 bg-white/92 p-5 backdrop-blur-xl sm:p-7">
+              <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                <div class="min-w-0">
+                  <div class="flex items-end gap-4">
+                    <div class="group/avatar relative shrink-0">
+                      <button type="button" class="rounded-full">
+                        <img
+                          [alt]="userData.name"
+                          class="h-28 w-28 rounded-full border-4 border-white object-cover shadow-md ring-2 ring-[#dbeafe]"
+                          [src]="userData.photo"
+                        /></button
+                      ><button
+                        (click)="openImage(userData.photo)"
+                        type="button"
+                        class="absolute bottom-1 left-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white text-[#1877f2] opacity-100 shadow-sm ring-1 ring-slate-200 transition duration-200 hover:bg-slate-50 sm:opacity-0 sm:group-hover/avatar:opacity-100 sm:group-focus-within/avatar:opacity-100"
+                        title="View profile photo"
+                        aria-label="View profile photo"
+                      >
+                        <i class="fa-solid fa-maximize"></i>
+                      </button>
+                      <form (ngSubmit)="confirmUploadPhoto()">
+                        <label
+                          class="absolute bottom-1 right-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#1877f2] text-white opacity-100 shadow-sm transition duration-200 hover:bg-[#166fe5] sm:opacity-0 sm:group-hover/avatar:opacity-100 sm:group-focus-within/avatar:opacity-100"
+                        >
+                          <i class="fa-regular fa-camera"></i
+                          ><input
+                            accept="image/*"
+                            class="hidden"
+                            type="file"
+                            (change)="onFileChange($event)"
+                        /></label>
+                      </form>
+                    </div>
+                    <div class="min-w-0 pb-1">
+                      <h2
+                        class="truncate text-2xl font-black tracking-tight text-slate-900 sm:text-4xl"
+                      >
+                        {{ userData.name }}
+                      </h2>
+                      <p class="mt-1 text-lg font-semibold text-slate-500 sm:text-xl">
+                        @ {{ userData.name }}
+                      </p>
+                      <div
+                        class="mt-3 inline-flex items-center gap-2 rounded-full border border-[#d7e7ff] bg-[#eef6ff] px-3 py-1 text-xs font-bold text-[#0b57d0]"
+                      >
+                        <i class="fa-solid fa-users"></i> Route Posts member
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="grid w-full grid-cols-3 gap-2 lg:w-[520px]">
+                  <div
+                    class="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-center sm:px-4 sm:py-4"
+                  >
+                    <p
+                      class="text-[11px] font-bold uppercase tracking-wide text-slate-500 sm:text-xs"
+                    >
+                      Followers
+                    </p>
+                    <p class="mt-1 text-2xl font-black text-slate-900 sm:text-3xl">
+                      {{ userData.followersCount }}
+                    </p>
+                  </div>
+                  <div
+                    class="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-center sm:px-4 sm:py-4"
+                  >
+                    <p
+                      class="text-[11px] font-bold uppercase tracking-wide text-slate-500 sm:text-xs"
+                    >
+                      Following
+                    </p>
+                    <p class="mt-1 text-2xl font-black text-slate-900 sm:text-3xl">
+                      {{ userData.followingCount }}
+                    </p>
+                  </div>
+                  <div
+                    class="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-center sm:px-4 sm:py-4"
+                  >
+                    <p
+                      class="text-[11px] font-bold uppercase tracking-wide text-slate-500 sm:text-xs"
+                    >
+                      Bookmarks
+                    </p>
+                    <p class="mt-1 text-2xl font-black text-slate-900 sm:text-3xl">
+                      {{ userData.bookmarksCount }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-5 grid gap-4 lg:grid-cols-[1.3fr_.7fr]">
+                <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <h3 class="text-sm font-extrabold text-slate-800">About</h3>
+                  <div class="mt-3 space-y-2 text-sm text-slate-600">
+                    <p class="flex items-center gap-2">
+                      <i class="fa-regular fa-envelope"></i> {{ userData.email }}
+                    </p>
+                    <p class="flex items-center gap-2">
+                      <i class="fa-solid fa-users"></i> Active on Route Posts
+                    </p>
+                  </div>
+                </div>
+                <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                  <div class="rounded-2xl border border-[#dbeafe] bg-[#f6faff] px-4 py-3">
+                    <p class="text-xs font-bold uppercase tracking-wide text-[#1f4f96]">My posts</p>
+                    <p class="mt-1 text-2xl font-black text-slate-900">{{ myPosts.length }}</p>
+                  </div>
+                  <div class="rounded-2xl border border-[#dbeafe] bg-[#f6faff] px-4 py-3">
+                    <p class="text-xs font-bold uppercase tracking-wide text-[#1f4f96]">
+                      Saved posts
+                    </p>
+                    <p class="mt-1 text-2xl font-black text-slate-900">{{ myPostsSaved.length }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      }
+
+      <section class="space-y-4">
+        <div
+          class="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm"
+        >
+          <div
+            class="grid w-full grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1.5 sm:inline-flex sm:w-auto sm:gap-0"
+          >
+            <button
+              (click)="changeTab('posts')"
+              [ngClass]="
+                activeTab === 'posts'
+                  ? 'bg-white text-[#1877f2] shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              "
+              class="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition"
+            >
+              <i class="fa-regular fa-file"></i> My Posts
+            </button>
+
+            <button
+              (click)="changeTab('saved')"
+              [ngClass]="
+                activeTab === 'saved'
+                  ? 'bg-white text-[#1877f2] shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              "
+              class="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition"
+            >
+              <i class="fa-regular fa-bookmark"></i> Saved
+            </button>
+          </div>
+          <span class="rounded-full bg-[#e7f3ff] px-3 py-1 text-xs font-bold text-[#1877f2]">
+            {{ activeTab === 'posts' ? myPosts.length : myPostsSaved.length }}
+          </span>
+        </div>
+
+        <div class="space-y-3">
+          @if (isLoading) {
+          <div class="flex justify-center py-10">
+            <div
+              class="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-[#1877f2]"
+            ></div>
+          </div>
+        } @else{
+          @if (activeTab === 'posts') {
+            @for (post of myPosts; track post._id) {
+              <article
+                class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_6px_rgba(15,23,42,.05)] transition hover:shadow-sm"
+              >
+                <div class="p-4">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex min-w-0 items-center gap-2">
+                      <img
+                        [alt]="post.user.name"
+                        class="h-10 w-10 rounded-full object-cover"
+                        [src]="post.user.photo"
+                      />
+                      <div class="min-w-0">
+                        <p class="truncate text-sm font-extrabold text-slate-900">
+                          {{ post.user.name }}
+                        </p>
+                        <p class="truncate text-xs font-semibold text-slate-500">
+                          @ {{ post.user.username }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      [routerLink]="['/post-details', post._id]"
+                      class="rounded-md px-2 py-1 text-xs font-bold text-[#1877f2] hover:bg-[#e7f3ff]"
+                    >
+                      View details
+                    </button>
+                  </div>
+                  <div class="pt-3">
+                    @if (post.body) {
+                      <p class="whitespace-pre-wrap text-[15px] leading-relaxed text-slate-800 wrap-break-word break-all">
+                        {{ post.body }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                @if (post.image) {
+                  <div class="border-y border-slate-200 bg-slate-950/95">
+                    <button
+                      (click)="openImage(post.image)"
+                      type="button"
+                      class="group relative flex w-full items-center justify-center cursor-pointer"
+                    >
+                      <img
+                        alt="post"
+                        class="max-h-[560px] w-auto max-w-full object-contain"
+                        [src]="post.image"
+                      /><span
+                        class="pointer-events-none absolute inset-0 bg-black/0 transition group-hover:bg-black/10"
+                      ></span>
+                    </button>
+                  </div>
+                }
+                <div
+                  class="flex flex-col gap-2 border-t border-slate-200 px-4 py-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between sm:gap-3"
+                >
+                  <div class="flex flex-wrap items-center gap-3 sm:gap-5">
+                    <span class="inline-flex items-center gap-2 font-semibold"
+                      ><i class="fa-regular fa-thumbs-up text-[#1877f2]"></i>
+                      {{ post.likesCount }} likes</span
+                    ><span class="inline-flex items-center gap-2 font-semibold"
+                      ><i class="fa-solid fa-retweet text-[#1877f2]"></i>
+                      {{ post.sharesCount }} shares</span
+                    ><span class="inline-flex items-center gap-2 font-semibold"
+                      ><i class="fa-regular fa-comment text-[#1877f2]"></i>
+                      {{ post.commentsCount }} comments</span
+                    >
+                  </div>
+                  <span class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500"
+                    ><i class="fa-regular fa-clock text-[#1877f2]"></i> {{ post.createdAt }}
+                  </span>
+                </div>
+              </article>
+            }
+          } @else {
+            @for (post of myPostsSaved; track post._id) {
+              <article
+                class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_6px_rgba(15,23,42,.05)] transition hover:shadow-sm"
+              >
+                <div class="p-4">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex min-w-0 items-center gap-2">
+                      <img
+                        [alt]="post.user.name"
+                        class="h-10 w-10 rounded-full object-cover"
+                        [src]="post.user.photo"
+                      />
+                      <div class="min-w-0">
+                        <p class="truncate text-sm font-extrabold text-slate-900">
+                          {{ post.user.name }}
+                        </p>
+                        <p class="truncate text-xs font-semibold text-slate-500">
+                          @ {{ post.user.username }}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      [routerLink]="['/post-details', post._id]"
+                      class="rounded-md px-2 py-1 text-xs font-bold text-[#1877f2] hover:bg-[#e7f3ff]"
+                    >
+                      View details
+                    </button>
+                  </div>
+                  <div class="pt-3">
+                    @if (post.body) {
+                      <p class="whitespace-pre-wrap text-[15px] leading-relaxed text-slate-800 wrap-break-word break-all">
+                        {{ post.body }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                @if (post.image) {
+                  <div class="border-y border-slate-200 bg-slate-950/95">
+                    <button
+                      (click)="openImage(post.image)"
+                      type="button"
+                      class="group relative flex w-full items-center justify-center cursor-pointer"
+                    >
+                      <img
+                        alt="post"
+                        class="max-h-[560px] w-auto max-w-full object-contain"
+                        [src]="post.image"
+                      /><span
+                        class="pointer-events-none absolute inset-0 bg-black/0 transition group-hover:bg-black/10"
+                      ></span>
+                    </button>
+                  </div>
+                }
+                <div
+                  class="flex flex-col gap-2 border-t border-slate-200 px-4 py-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between sm:gap-3"
+                >
+                  <div class="flex flex-wrap items-center gap-3 sm:gap-5">
+                    <span class="inline-flex items-center gap-2 font-semibold"
+                      ><i class="fa-regular fa-thumbs-up text-[#1877f2]"></i>
+                      {{ post.likesCount }} likes</span
+                    ><span class="inline-flex items-center gap-2 font-semibold"
+                      ><i class="fa-solid fa-retweet text-[#1877f2]"></i>
+                      {{ post.sharesCount }} shares</span
+                    ><span class="inline-flex items-center gap-2 font-semibold"
+                      ><i class="fa-regular fa-comment text-[#1877f2]"></i>
+                      {{ post.commentsCount }} comments</span
+                    >
+                  </div>
+                  <span class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500"
+                    ><i class="fa-regular fa-clock text-[#1877f2]"></i> {{ post.createdAt }}
+                  </span>
+                </div>
+              </article>
+            }
+          }
+
+        }
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<app-image-modal [imageUrl]="selectedImgForModal" (close)="closeImage()"></app-image-modal>
+
+@if (isEditModalOpen) {
+  <div
+    class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in"
+  >
+    <div
+      class="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden animate-zoom-in"
+    >
+      <div class="p-6 pb-0">
+        <h3 class="text-xl font-bold text-slate-900">Adjust profile photo</h3>
+        <p class="text-sm text-slate-500">Drag to reposition and use zoom for perfect framing.</p>
+      </div>
+
+      <div class="p-6 flex flex-col items-center">
+        <div
+          class="relative w-64 h-64 rounded-3xl overflow-hidden bg-slate-100 border-4 border-slate-50 shadow-inner mb-6"
+        >
+          <img
+            [src]="selectedFilePreview"
+            class="w-full h-full object-cover transition-transform duration-200"
+            [style.transform]="'scale(' + zoomScale + ')'"
+            alt="Preview"
+          />
+        </div>
+
+        <div class="w-full space-y-2 mb-6">
+          <div
+            class="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-wider"
+          >
+            <span>Zoom</span>
+            <span>{{ zoomScale.toFixed(2) }}x</span>
+          </div>
+          <input
+            type="range"
+            min="1"
+            max="3"
+            step="0.01"
+            [(ngModel)]="zoomScale"
+            class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1877f2]"
+          />
+        </div>
+
+        <div class="w-full space-y-2">
+          <label class="text-xs font-bold text-slate-400 uppercase tracking-wider"
+            >Post Privacy</label
+          >
+          <select
+            class="w-full bg-white border border-slate-200 text-slate-900 text-sm rounded-xl p-3 font-semibold focus:ring-2 focus:ring-[#1877f2] outline-none"
+          >
+            <option value="public">Public</option>
+            <option value="followers">Followers</option>
+            <option value="only-me">Only me</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 p-6 bg-slate-50">
+        <button
+          (click)="closeEditModal()"
+          [disabled]="isUploading"
+          type="button"
+          class="px-6 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-200 rounded-xl transition"
+        >
+          Cancel
+        </button>
+
+        <button
+          (click)="confirmUploadPhoto()"
+          [disabled]="isUploading"
+          type="button"
+          class="px-6 py-2.5 text-sm font-bold text-white bg-[#1877f2] hover:bg-[#166fe5] rounded-xl shadow-md transition flex items-center gap-2"
+        >
+          @if (isUploading) {
+            <i class="fa-solid fa-circle-notch animate-spin"></i>
+            Saving...
+          } @else {
+            Save photo
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+}

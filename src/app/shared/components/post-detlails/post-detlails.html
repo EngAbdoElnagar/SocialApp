@@ -1,0 +1,23 @@
+
+<!-- ???????????????????????? -->
+<div class="mx-auto max-w-7xl px-3 py-3.5">
+  <main class="min-w-0">
+    <div class="mx-auto max-w-3xl space-y-4">
+      <button
+        routerLink="/timeline"
+        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50 cursor-pointer"
+      >
+        <i class="fa-solid fa-arrow-left"></i>Back
+      </button>
+      <article>
+        <!-- postDetails -->
+        @if (post) {
+          <app-post-card [post]="post" [currentUserId]="currentUserId"></app-post-card>
+        } @else {
+          <div class="p-10 text-center text-slate-500">Loading post details...</div>
+        }
+        <!-- postDetails -->
+      </article>
+    </div>
+  </main>
+</div>

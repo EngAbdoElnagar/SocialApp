@@ -1,0 +1,65 @@
+<div class="mx-auto max-w-7xl px-3 py-3.5">
+  <main class="min-w-0">
+    <div class="space-y-4">
+      <button
+        routerLink="/timeline"
+        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50 cursor-pointer"
+      >
+        <i class="fa-solid fa-arrow-left"></i>Back
+      </button>
+      @if (userData) {
+        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          @if (userData.cover) {
+            <div
+              class="h-48 bg-[linear-gradient(112deg,#0f172a_0%,#1e3a5f_36%,#2b5178_72%,#5f8fb8_100%)]"
+              [style.background-image]="
+                `linear-gradient(rgba(15, 23, 42, 0.22), rgba(15, 23, 42, 0.4)), url(${userData.cover})`
+              "
+              style="background-size: cover; background-position: center center"
+            ></div>
+          } @else {
+            <div
+              class="h-48 bg-[linear-gradient(112deg,#0f172a_0%,#1e3a5f_36%,#2b5178_72%,#5f8fb8_100%)]"
+            ></div>
+          }
+          <div class="relative -mt-14 px-3 pb-5 sm:px-5">
+            <div
+              class="flex flex-wrap items-end justify-between gap-4 rounded-2xl border border-white/70 bg-white/95 p-4"
+            >
+              <div class="flex items-end gap-3">
+                <img
+                  [alt]="userData.name"
+                  class="h-20 w-20 rounded-full border-4 border-white object-cover shadow-sm sm:h-24 sm:w-24"
+                  [src]="userData.photo"
+                />
+                <div>
+                  <p class="text-xl font-black text-slate-900 sm:text-2xl">
+                    {{ userData.name }}
+                  </p>
+                  <p class="text-sm font-semibold text-slate-500 sm:text-base">
+                    @ {{ userData.username }}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-extrabold transition sm:w-auto bg-[#1877f2] text-white hover:bg-[#166fe5]"
+              >
+                <i class="fa-solid fa-user-plus"></i> Follow
+              </button>
+            </div>
+          </div>
+        </section>
+      }
+
+      <section class="space-y-3">
+        @for (post of userPosts; track post._id) {
+          <app-post-card 
+          [post]="post"
+          [currentUserId]="currentUserId"
+          ></app-post-card>
+        }
+      </section>
+    </div>
+  </main>
+</div>

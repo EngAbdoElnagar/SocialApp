@@ -15,6 +15,7 @@ import { NotFound } from './features/notfound/not-found/not-found';
 import { Settings } from './features/Settings/settings/settings';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'timeline', pathMatch: 'full' },
   {
     path: "", component: Authlayout,canActivate : [noauthGuard] ,children: [
       { path: "signup", component: Signup },

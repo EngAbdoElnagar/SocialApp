@@ -1,5 +1,9 @@
 <section
-  class="min-h-screen flex items-center justify-center bg-cover bg-center bg-[linear-gradient(rgba(20,71,230,0.8),rgba(20,71,230,0.8)),url('images/signup-bg.png')]"
+  style="
+    background-image:
+      linear-gradient(rgba(20, 71, 230, 0.8), rgba(20, 71, 230, 0.8)), url('images/signUp.png');
+  "
+  class="min-h-screen flex items-center justify-center bg-cover bg-center"
 >
   <div class="p-10 flex flex-col justify-between min-h-screen">
     <div class="flex gap-2 items-center font-bold capitalize text-white text-2xl mb-4">
@@ -14,22 +18,25 @@
     <div>
       <div class="pb-5">
         <h2 class="text-5xl font-bold text-white mb-4">
-          @if(isLogin ) {
+          @if (isLogin) {
             Welcome Back to <br />
-      <span class="pb-4 bg-linear-to-r from-cyan-300 to-cyan-100 bg-clip-text text-transparent">
-        to SocialHub App
-      </span>
+            <span
+              class="pb-4 bg-linear-to-r from-cyan-300 to-cyan-100 bg-clip-text text-transparent"
+            >
+              to SocialHub App
+            </span>
           } @else {
             Conncet width <br />
-          <span class="pb-4 bg-linear-to-r from-cyan-300 to-cyan-100 bg-clip-text text-transparent">
-            amazing people</span
-          >
+            <span
+              class="pb-4 bg-linear-to-r from-cyan-300 to-cyan-100 bg-clip-text text-transparent"
+            >
+              amazing people</span
+            >
           }
-          
         </h2>
 
         <p class="text-white text-base mb-4">
-          @if(isLogin){
+          @if (isLogin) {
             Signin to connect people all over the world
           } @else {
             Join millions of users sharing moments, ideas, and building <br />
